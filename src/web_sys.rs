@@ -1576,6 +1576,18 @@ impl Context {
             None => None,
         }
     }
+
+    /// Get raw WebGlTexture from a texture key.
+    /// Returns None if the key is invalid.
+    pub fn get_raw_texture(&self, texture: WebTextureKey) -> Option<WebGlTexture> {
+        self.textures.borrow().get(texture).cloned()
+    }
+
+    /// Register an external WebGlTexture and return a texture key.
+    /// The texture will NOT be deleted when the key is deleted.
+    pub fn texture_from_raw(&self, raw: WebGlTexture) -> WebTextureKey {
+        self.textures.borrow_mut().insert(raw)
+    }
 }
 
 new_key_type! { pub struct WebShaderKey; }
